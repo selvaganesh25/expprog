@@ -1,0 +1,43 @@
+import java.util.*;
+
+public class CaesarCipher {
+    public static void main(String[] args) {
+        String allLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHI" + "JKLMNOPQRSTUVWXYZ";
+        Scanner scanner = new Scanner(System.in);
+        int key = 3;
+        System.out.print("Enter the plaintext message: ");
+        String plainText = scanner.nextLine();
+
+        Map<Character, Character> dict1 = new HashMap<>();
+        for (int i = 0; i < allLetters.length(); i++) {
+            dict1.put(allLetters.charAt(i),
+                    allLetters.charAt((i + key) % allLetters.length()));
+        }
+
+        StringBuilder cipherText = new StringBuilder();
+        for (char c : plainText.toCharArray()) {
+            if (allLetters.indexOf(c) != -1) {
+                cipherText.append(dict1.get(c));
+            } else {
+                cipherText.append(c);
+            }
+        }
+
+        System.out.println("Cipher Text is: " + cipherText);
+        Map<Character, Character> dict2 = new HashMap<>();
+        for (int i = 0; i < allLetters.length(); i++) {
+            dict2.put(allLetters.charAt(i),
+                    allLetters.charAt((i - key + allLetters.length()) % allLetters.length()));
+        }
+
+        StringBuilder decryptedText = new StringBuilder();
+        for (char c : cipherText.toString().toCharArray()) {
+            if (allLetters.indexOf(c) != -1) {
+                decryptedText.append(dict2.get(c));
+            } else {
+                decryptedText.append(c);
+            }
+        }
+        scanner.close();
+    }
+}
